@@ -41,6 +41,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
+          port: 22
           envs: WORKING_DIR
           script: |
             cd $WORKING_DIR
