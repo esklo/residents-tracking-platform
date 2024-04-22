@@ -8,4 +8,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: run tests
-        run: docker compose -f docker-compose.yml -f e2e/docker-compose.yml up --exit-code-from e2e
+        run: |
+          touch .env
+          docker compose -f docker-compose.yml -f e2e/docker-compose.yml up --exit-code-from e2e
