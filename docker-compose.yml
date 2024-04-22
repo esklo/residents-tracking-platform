@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   postgres:
     image: postgis/postgis
@@ -23,7 +22,7 @@ services:
     networks:
       - network
     ports:
-      - "8080:8080"
+      - "80:8080"
       - "9999:9999"
     restart: always
 volumes:
