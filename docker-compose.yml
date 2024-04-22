@@ -35,7 +35,7 @@ services:
       - network
     restart: always
   backend-internal:
-    image: ghcr.io/esklo/residents-tracking-platform-backend:v0.0.4
+    image: ghcr.io/esklo/residents-tracking-platform-backend:v0.0.5
     env_file:
       - .env
     environment:
@@ -63,7 +63,7 @@ services:
       - "traefik.http.middlewares.strip-path.stripprefix.prefixes=/api"
       - "traefik.http.routers.app.entrypoints=web"
   frontend-internal:
-    image: ghcr.io/esklo/residents-tracking-platform-frontend:v0.0.5
+    image: ghcr.io/esklo/residents-tracking-platform-frontend:v0.0.4
     env_file:
       - .env
     networks:
