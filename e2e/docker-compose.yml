@@ -6,8 +6,8 @@ services:
       - traefik
       - backend-internal
       - frontend-internal
-    environment:
-      - CYPRESS_baseUrl=http://traefik
+    env_file:
+      - .env
     command: npx cypress run
     volumes:
       - ./e2e/cypress:/app/cypress

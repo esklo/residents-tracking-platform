@@ -24,8 +24,8 @@ describe('Cypress Studio Demo', () => {
     it('authValid', function () {
         /* ==== Generated with Cypress Studio ==== */
         cy.visit('/');
-        cy.get('#email_input').type('eugene.lentin@yandex.ru');
-        cy.get('#password_input').type('ighTERsOpsITheniMsyChAntO');
+        cy.get('#email_input').type(Cypress.env("CYPRESS_ADMIN_EMAIL"));
+        cy.get('#password_input').type(Cypress.env("CYPRESS_ADMIN_PASSWORD"));
         cy.get('#login_button').click();
         cy.get('.toast_container').first().should("contain.text", "Вы авторизовались");
         /* ==== End Cypress Studio ==== */
