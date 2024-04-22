@@ -2,6 +2,7 @@ name: Cypress Tests
 on: push
 env:
   REGISTRY: ghcr.io
+  WORKING_DIR: /root/residents-tracking-platform
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
@@ -27,3 +28,25 @@ jobs:
         run: |
           cp .env.test .env
           docker compose -f docker-compose.yml -f e2e/docker-compose.yml up --exit-code-from e2e
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: cypress-run
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
+      - name: deploy
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_KEY }}
+          envs: WORKING_DIR
+          script: |
+            cd $WORKING_DIR
+            git stash
+            git pull
+            docker compose build
+            docker compose down
+            docker compose up -d
+            docker image prune -af
