@@ -1,0 +1,16 @@
+services:
+  e2e:
+    image: cypress
+    build: ./e2e
+    depends_on:
+      - traefik
+      - backend-internal
+      - frontend-internal
+    environment:
+      - CYPRESS_baseUrl=http://traefik
+    command: npx cypress run
+    volumes:
+      - ./e2e/cypress:/app/cypress
+      - ./e2e/cypress.config.js:/app/cypress.config.js
+    networks:
+      - network

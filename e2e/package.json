@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "name": "residents-tracking-platform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^13.8.0",
+    "typescript": "^5.4.5"
+  }
+}

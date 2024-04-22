@@ -13,17 +13,69 @@ services:
       - ./docker/postgres:/docker-entrypoint-initdb.d/
     networks:
       - network
-  app:
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "db_prod" ]
+      interval: 5s
+      timeout: 10s
+      retries: 15
+      start_period: 80s
+  traefik:
+    image: traefik:v2.11
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - network
+    restart: always
+  backend-internal:
     image: ghcr.io/esklo/residents-tracking-platform-backend:latest
     env_file:
       - .env
+      - .env.test
+    environment:
+      AWS_S3_ENDPOINT: ${AWS_S3_ENDPOINT}
+      AWS_S3_REGION: ${AWS_S3_REGION}
+      AWS_S3_KEY_ID: ${AWS_S3_KEY_ID}
+      AWS_S3_ACCESS_KEY: ${AWS_S3_ACCESS_KEY}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
+
+      DADATA_API_KEY: ${DADATA_API_KEY}
+      DADATA_SECRET_KEY: ${DADATA_SECRET_KEY}
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     networks:
       - network
     ports:
-      - "80:8080"
+      - "8888:8080"
       - "9999:9999"
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=PathPrefix(`/api/`)"
+      - "traefik.http.routers.app.middlewares=strip-path"
+      - "traefik.http.middlewares.strip-path.stripprefix.prefixes=/api"
+      - "traefik.http.routers.app.entrypoints=web"
+  frontend-internal:
+    image: ghcr.io/esklo/residents-tracking-platform-frontend:v0.0.4
+    env_file:
+      - .env
+      - .env.test
+    networks:
+      - network
+    ports:
+      - "8887:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
     restart: always
 volumes:
   pgsql:
