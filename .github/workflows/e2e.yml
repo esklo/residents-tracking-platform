@@ -32,6 +32,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     needs: cypress-run
+    environment: Testing env
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -41,7 +42,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
-          port: 22
+          port: ${{ secrets.SERVER_PORT }}
           envs: WORKING_DIR
           script: |
             cd $WORKING_DIR
