@@ -38,7 +38,6 @@ services:
     image: ghcr.io/esklo/residents-tracking-platform-backend:latest
     env_file:
       - .env
-      - .env.test
     environment:
       AWS_S3_ENDPOINT: ${AWS_S3_ENDPOINT}
       AWS_S3_REGION: ${AWS_S3_REGION}
@@ -67,7 +66,6 @@ services:
     image: ghcr.io/esklo/residents-tracking-platform-frontend:v0.0.4
     env_file:
       - .env
-      - .env.test
     networks:
       - network
     ports:
