@@ -24,8 +24,8 @@ describe('Cypress Studio Demo', () => {
     it('authValid', function () {
         /* ==== Generated with Cypress Studio ==== */
         cy.visit('/');
-        cy.get('#email_input').type(Cypress.env("CYPRESS_ADMIN_EMAIL"));
-        cy.get('#password_input').type(Cypress.env("CYPRESS_ADMIN_PASSWORD"));
+        cy.get('#email_input').type(Cypress.env("ADMIN_EMAIL"));
+        cy.get('#password_input').type(Cypress.env("ADMIN_PASSWORD"));
         cy.get('#login_button').click();
         cy.get('.toast_container').first().should("contain.text", "Вы авторизовались");
         /* ==== End Cypress Studio ==== */
@@ -95,9 +95,10 @@ describe('Cypress Studio Demo', () => {
         cy.get('.drag_and_drop_area').first().selectFile(["cypress/fixtures/img.png"], {action: "drag-drop"})
         cy.wait(2000)
         cy.get('.drag_and_drop_area').first().selectFile("cypress/fixtures/img2.png", {action: "drag-drop"})
-        cy.get('#contact_info_name').type(request.name);
+        cy.wait(2000)
         cy.get('#contact_info_phone').type(request.phone);
         cy.get('#contact_info_email').type(request.email);
+        cy.get('#contact_info_name').type(request.name);
         cy.get("#address_select_input", {timeout: 10000}).type(request.address)
         cy.get(".address_select_element", {timeout: 20000}).first().click()
         cy.get('#create_request_button').click();
