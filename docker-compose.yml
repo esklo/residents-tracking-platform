@@ -62,6 +62,8 @@ services:
       - "traefik.http.routers.app.middlewares=strip-path"
       - "traefik.http.middlewares.strip-path.stripprefix.prefixes=/api"
       - "traefik.http.routers.app.entrypoints=web"
+    volumes:
+      - "./log.json:/app/log.json"
   frontend-internal:
     image: ghcr.io/esklo/residents-tracking-platform-frontend:v0.0.6
     env_file:
