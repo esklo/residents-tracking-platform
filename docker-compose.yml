@@ -6,15 +6,13 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DATABASE: ${DB_DATABASE}
-    ports:
-      - "5432:5432"
     volumes:
       - pgsql:/var/lib/postgresql/data
       - ./docker/postgres:/docker-entrypoint-initdb.d/
     networks:
       - network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready", "-d", "db_prod" ]
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DATABASE} -U $${POSTGRES_USER}" ]
       interval: 5s
       timeout: 10s
       retries: 15
@@ -52,9 +50,6 @@ services:
         condition: service_healthy
     networks:
       - network
-    ports:
-      - "8888:8080"
-      - "9999:9999"
     restart: always
     labels:
       - "traefik.enable=true"
@@ -64,14 +59,13 @@ services:
       - "traefik.http.routers.app.entrypoints=web"
     volumes:
       - "./log.json:/app/log.json"
+      - ".env:/app/.env"
   frontend-internal:
     image: ghcr.io/esklo/residents-tracking-platform-frontend:v0.0.6
     env_file:
       - .env
     networks:
       - network
-    ports:
-      - "8887:80"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
