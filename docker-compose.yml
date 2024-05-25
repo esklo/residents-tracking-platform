@@ -33,7 +33,7 @@ services:
       - network
     restart: always
   backend-internal:
-    image: ghcr.io/esklo/residents-tracking-platform-backend:v0.0.10
+    image: ghcr.io/esklo/residents-tracking-platform-backend:v0.0.11
     env_file:
       - .env
     environment:
