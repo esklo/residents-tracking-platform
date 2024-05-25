@@ -61,7 +61,7 @@ services:
       - "./log.json:/app/log.json"
       - ".env:/app/.env"
   frontend-internal:
-    image: ghcr.io/esklo/residents-tracking-platform-frontend:v0.0.7
+    image: ghcr.io/esklo/residents-tracking-platform-frontend:v0.0.8
     env_file:
       - .env
     networks:
