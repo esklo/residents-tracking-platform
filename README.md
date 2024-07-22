@@ -23,6 +23,9 @@
 └── README.md
 ```
 
+### Architecture
+![architecture](./assets/c4.png)
+
 ### CI/CD pipeline
 ![ci/cd pipeline](./assets/cicd.png)
 
