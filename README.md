@@ -24,7 +24,7 @@
 ```
 
 ### Architecture
-![architecture](./assets/c4.png)
+![architecture](./assets/c4.jpeg)
 
 ### CI/CD pipeline
 ![ci/cd pipeline](./assets/cicd.png)
