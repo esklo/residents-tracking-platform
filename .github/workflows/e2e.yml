@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Deploy
 on: push
 env:
   REGISTRY: ghcr.io
