@@ -35,7 +35,7 @@ services:
       - network
     restart: always
   backend-internal:
-    image: ghcr.io/esklo/residents-tracking-platform-backend:v0.0.17
+    image: ghcr.io/esklo/residents-tracking-platform-backend:v0.0.18
     env_file:
       - .env
     environment:
@@ -62,7 +62,7 @@ services:
     volumes:
       - ".env:/app/.env"
   frontend-internal:
-    image: ghcr.io/esklo/residents-tracking-platform-frontend:v0.0.14
+    image: ghcr.io/esklo/residents-tracking-platform-frontend:v0.0.15
     env_file:
       - .env
     networks:
